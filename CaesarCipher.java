@@ -5,7 +5,7 @@ public class CaesarCipher {
 	public static void main(String[] args) {
 
 		Scanner num = new Scanner(System.in);
-        System.out.println("Do you want to  1. Encrypt the file?  2. decrypt the file?");
+        System.out.println("Do you want to\n 1. Encrypt the file?\n 2. decrypt the file?");
         int choice = num.nextInt();
         
         Scanner sc = new Scanner(System.in);
