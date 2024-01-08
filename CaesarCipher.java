@@ -57,6 +57,7 @@ public class CaesarCipher {
     public static String decrypt(String msg, int key) {
 		
 		StringBuilder decryptedMessage = new StringBuilder();
+		msg = msg.toLowerCase();
 		for(int i = 0; i < msg.length(); i++) {
 			char c = msg.charAt(i);
 			if(Character.isLetter(c)) {
