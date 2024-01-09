@@ -4,17 +4,20 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class NewTicTacToe implements ActionListener {
+
     Random random = new Random();
     JFrame frame = new JFrame();
+
     JPanel title_panel = new JPanel();
     JPanel button_panel = new JPanel();
-    JLabel textfield = new JLabel();
+
     JButton[] buttons = new JButton[9];
     JButton resetButton = new JButton("Reset");
     JButton exitButton = new JButton("Exit");
     JButton vsComputerButton = new JButton("Computer vs Player");
     JButton vsPlayerButton = new JButton("Player 1 vs Player 2");
 
+    JLabel textfield = new JLabel();
     JLabel player1ScoreLabel = new JLabel("Player 1 (X): 0");
     JLabel player2ScoreLabel = new JLabel("Player 2 (O): 0");
 
@@ -31,13 +34,15 @@ public class NewTicTacToe implements ActionListener {
 
         textfield.setBackground(new Color(25, 25, 25));
         textfield.setForeground(new Color(25, 255, 0));
-        textfield.setFont(new Font("Ink Free", Font.BOLD, 75));
+        textfield.setFont(new Font("Ink Free", Font.BOLD, 50));
         textfield.setHorizontalAlignment(JLabel.CENTER);
         textfield.setText("Tic-Tac-Toe");
         textfield.setOpaque(true);
 
         title_panel.setLayout(new BorderLayout());
         title_panel.setBounds(0, 0, 800, 100);
+
+        // for X & O
 
         button_panel.setLayout(new GridLayout(3, 3));
 
@@ -49,9 +54,13 @@ public class NewTicTacToe implements ActionListener {
             buttons[i].addActionListener(this);
         }
 
+        // for title
+
         title_panel.add(textfield, BorderLayout.NORTH);
         frame.add(title_panel, BorderLayout.NORTH);
         frame.add(button_panel);
+
+        // for score board
 
         JPanel scorePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         scorePanel.add(player1ScoreLabel);
@@ -59,13 +68,29 @@ public class NewTicTacToe implements ActionListener {
 
         title_panel.add(scorePanel, BorderLayout.SOUTH);
 
+        // for reset and exit button
+
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         bottomPanel.add(resetButton);
         bottomPanel.add(exitButton);
-        bottomPanel.add(vsComputerButton);
-        bottomPanel.add(vsPlayerButton);
 
         frame.add(bottomPanel, BorderLayout.SOUTH);
+
+        // for vs button
+
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+
+        vsComputerButton.setForeground(Color.YELLOW);
+        vsPlayerButton.setForeground(Color.YELLOW);
+        vsComputerButton.setBackground(Color.BLACK);
+        vsPlayerButton.setBackground(Color.BLACK);
+
+        buttonPanel.add(vsPlayerButton);
+        buttonPanel.add(vsComputerButton);
+
+        title_panel.add(buttonPanel, BorderLayout.CENTER);
+
+        // button properties
 
         resetButton.setFont(new Font("Arial", Font.BOLD, 20));
         exitButton.setFont(new Font("Arial", Font.BOLD, 20));
@@ -151,11 +176,6 @@ public class NewTicTacToe implements ActionListener {
         check();
     }
 
-    
-    
-    
-    
-    
     public void firstTurn() {
         try {
             Thread.sleep(1000);
@@ -199,8 +219,8 @@ public class NewTicTacToe implements ActionListener {
     private void checkForWin(String symbol) {
         for (int[] winCondition : WIN_CONDITIONS) {
             if (buttons[winCondition[0]].getText().equals(symbol) &&
-                buttons[winCondition[1]].getText().equals(symbol) &&
-                buttons[winCondition[2]].getText().equals(symbol)) {
+                    buttons[winCondition[1]].getText().equals(symbol) &&
+                    buttons[winCondition[2]].getText().equals(symbol)) {
                 highlightWinningCells(winCondition);
                 updateScore(symbol);
                 return;
@@ -242,9 +262,7 @@ public class NewTicTacToe implements ActionListener {
     }
 
     private static final int[][] WIN_CONDITIONS = {
-            {0, 1, 2}, {3, 4, 5}, {6, 7, 8},  // Rows
-            {0, 3, 6}, {1, 4, 7}, {2, 5, 8},  // Columns
-            {0, 4, 8}, {2, 4, 6}              // Diagonals
+            { 0, 1, 2 }, { 3, 4, 5 }, { 6, 7, 8 }, { 0, 3, 6 }, { 1, 4, 7 }, { 2, 5, 8 }, { 0, 4, 8 }, { 2, 4, 6 }
     };
 
     private final Map<String, String> symbolToPlayer = Map.of("X", "Player 1", "O", "Player 2");
