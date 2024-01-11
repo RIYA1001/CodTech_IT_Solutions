@@ -63,9 +63,7 @@ public class NewTicTacToe implements ActionListener {
         }
      
         frame.add(leftEmptyPanel, BorderLayout.WEST);
-        
         frame.add(button_panel, BorderLayout.CENTER);
-
         frame.add(rightEmptyPanel, BorderLayout.EAST);
         
 
@@ -73,7 +71,7 @@ public class NewTicTacToe implements ActionListener {
 
         title_panel.add(textfield, BorderLayout.NORTH);
         frame.add(title_panel, BorderLayout.NORTH);
-        frame.add(button_panel);
+        //frame.add(button_panel);
            
 
         // for score board
@@ -128,6 +126,7 @@ public class NewTicTacToe implements ActionListener {
         vsPlayerButton.addActionListener(this);
 
         firstTurn();
+
     }
 
     @Override
@@ -159,29 +158,38 @@ public class NewTicTacToe implements ActionListener {
             }
         }
     }
+    
+    
+    
+    private boolean playerMoveMade = false;
+    
 
+ // Modify handleVsComputerMove() method
     private void handleVsComputerMove(int index) {
-        if (buttons[index].getText().equals("")) {
+        if (!playerMoveMade && buttons[index].getText().equals("")) {
             buttons[index].setForeground(new Color(255, 0, 0));
             buttons[index].setText("X");
-            player1_turn = true;
-            textfield.setText("Player (X) turn");
+            player1_turn = false;
+            textfield.setText("Computer (O) turn");
+            playerMoveMade = true;
             check();
-            if (!player1_turn) {
-                computerMove();
-                player1_turn = true; // Corrected line
-                textfield.setText("Player (X) turn");
-            }
+            computerMove();
+           
         }
     }
 
+    // Modify handleVsPlayerMove() method
     private void handleVsPlayerMove(int index) {
         if (player1_turn && buttons[index].getText().equals("")) {
             buttons[index].setForeground(new Color(255, 0, 0));
             buttons[index].setText("X");
             player1_turn = false;
             textfield.setText("Player 2 (O) turn");
+            playerMoveMade = true;
             check();
+            if (player1_turn) {
+                computerMove();
+            }
         } else if (!player1_turn && buttons[index].getText().equals("")) {
             buttons[index].setForeground(new Color(0, 0, 255));
             buttons[index].setText("O");
@@ -196,43 +204,52 @@ public class NewTicTacToe implements ActionListener {
     private void computerMove() {
         int index = -1;
 
-        // Check for an opportunity to win
-        for (int[] winCondition : WIN_CONDITIONS) {
-            int count = 0;
-            for (int i : winCondition) {
-                if (buttons[i].getText().equals("O")) {
-                    count++;
-                } else if (buttons[i].getText().equals("X")) {
-                    break;
-                } else {
-                    index = i;
-                }
-            }
-            if (count == 2 && index != -1) {
-                break;
-            }
-        }
-
-        // If no opportunity to win, block the opponent
-        if (index == -1) {
-            for (int[] winCondition : WIN_CONDITIONS) {
-                int count = 0;
-                for (int i : winCondition) {
-                    if (buttons[i].getText().equals("X")) {
-                        count++;
-                    } else if (buttons[i].getText().equals("O")) {
-                        break;
+        // Check if player clicked on button 3
+        if (buttons[2].getText().equals("X")) {
+            // If button 5 is not selected, make a move on button 5
+            if (!buttons[4].getText().equals("")) {
+                // If button 1 is not selected, make a move on button 1
+                if (!buttons[0].getText().equals("")) {
+                    // If button 3 is not selected, make a move on button 3
+                    if (!buttons[2].getText().equals("")) {
+                        // If none of the preferred moves are available, make a random move
+                        do {
+                            index = random.nextInt(9);
+                        } while (!buttons[index].getText().equals(""));
                     } else {
-                        index = i;
+                        index = 2;
                     }
+                } else {
+                    index = 0;
                 }
-                if (count == 2 && index != -1) {
-                    break;
+            } else {
+                index = 4;
+            }
+        }
+        // Check if player clicked on button 2
+        else if (buttons[1].getText().equals("X")) {
+            // If button 1 is not selected, make a move on button 1
+            if (!buttons[0].getText().equals("")) {
+                // If button 5 is not selected, make a move on button 5
+                if (!buttons[4].getText().equals("")) {
+                    // If button 7 is not selected, make a move on button 7
+                    if (!buttons[6].getText().equals("")) {
+                        // If none of the preferred moves are available, make a random move
+                        do {
+                            index = random.nextInt(9);
+                        } while (!buttons[index].getText().equals(""));
+                    } else {
+                        index = 6;
+                    }
+                } else {
+                    index = 4;
                 }
+            } else {
+                index = 0;
             }
         }
 
-        // If still no move, make a random move
+        // Default random move if not in the specified conditions
         if (index == -1) {
             do {
                 index = random.nextInt(9);
@@ -243,10 +260,11 @@ public class NewTicTacToe implements ActionListener {
         buttons[index].setText("O");
         player1_turn = true;
         textfield.setText("Player 1 (X) turn");
+        playerMoveMade = false; // Reset player move flag
         check();
     }
 
-
+    
 
     public void firstTurn() {
         try {
@@ -344,4 +362,5 @@ public class NewTicTacToe implements ActionListener {
     public static void main(String[] args) {
         new NewTicTacToe();
     }
+    
 }
