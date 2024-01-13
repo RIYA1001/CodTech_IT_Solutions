@@ -121,7 +121,6 @@ public class NewTicTacToe implements ActionListener {
 
         firstTurn();
         resetScoreboard();
-
     }
 
     @Override
@@ -167,7 +166,6 @@ public class NewTicTacToe implements ActionListener {
             playerMoveMade = true;
             check();
             computerMove();
-
         }
     }
 
@@ -194,7 +192,6 @@ public class NewTicTacToe implements ActionListener {
     // Computer move starts
 
     private void computerMove() {
-        // Check if all buttons are selected
         boolean allButtonsSelected = true;
         for (int i = 0; i < 9; i++) {
             if (buttons[i].getText().equals("")) {
@@ -204,7 +201,6 @@ public class NewTicTacToe implements ActionListener {
         }
 
         if (allButtonsSelected) {
-            // All buttons are selected, it's a draw
             textfield.setText("Draw");
             disableButtons();
             return;
@@ -218,7 +214,6 @@ public class NewTicTacToe implements ActionListener {
                 if (index == -1) {
                     index = findBlockingMove("X");
                     if (index == -1) {
-                        // Find a random available button
                         do {
                             index = random.nextInt(9);
                         } while (!buttons[index].getText().equals(""));
@@ -247,7 +242,6 @@ public class NewTicTacToe implements ActionListener {
                     emptyIndex = index;
                 }
             }
-
             if (emptyCount == 2 && emptyIndex != -1) {
                 return emptyIndex;
             }
@@ -318,8 +312,31 @@ public class NewTicTacToe implements ActionListener {
         String winnerName = vsComputerMode ? (winnerSymbol.equals("X") ? "Player" : "Computer")
                 : (winnerSymbol.equals("X") ? "Player 1" : "Player 2");
         textfield.setText(winnerName + " wins");
-        updateScore(winnerName);
     }
+
+    // Update part starts
+
+    private void updateScore(String winner) {
+        if (vsComputerMode) {
+            if (winner.equals("Player")) {
+                scoreboard.put("Player", scoreboard.getOrDefault("Player", 0) + 1);
+                player1ScoreLabel.setText("Player (X): " + scoreboard.getOrDefault("Player", 0));
+            } else if (winner.equals("Computer")) {
+                scoreboard.put("Computer", scoreboard.getOrDefault("Computer", 0) + 1);
+                player2ScoreLabel.setText("Computer (O): " + scoreboard.getOrDefault("Computer", 0));
+            }
+        } else {
+            if (winner.equals("Player 1")) {
+                scoreboard.put("Player 1", scoreboard.getOrDefault("Player 1", 0) + 1);
+                player1ScoreLabel.setText("Player 1 (X): " + scoreboard.getOrDefault("Player 1", 0));
+            } else if (winner.equals("Player 2")) {
+                scoreboard.put("Player 2", scoreboard.getOrDefault("Player 2", 0) + 1);
+                player2ScoreLabel.setText("Player 2 (O): " + scoreboard.getOrDefault("Player 2", 0));
+            }
+        }
+    }
+
+    // update part ends
 
     private void disableButtons() {
         for (int i = 0; i < 9; i++) {
@@ -350,7 +367,7 @@ public class NewTicTacToe implements ActionListener {
             player1ScoreLabel.setText("Player 1 (X): 0");
             player2ScoreLabel.setText("Player 2 (O): 0");
         }
-        updateScoreLabels();
+
         resetCommon();
     }
 
@@ -364,37 +381,6 @@ public class NewTicTacToe implements ActionListener {
     }
 
     // reset part ends
-
-    // Update part starts
-
-    private void updateScore(String winner) {
-        if (vsComputerMode) {
-            if (winner.equals("Computer")) {
-                scoreboard.put("Computer", scoreboard.getOrDefault("Computer", 0) + 1);
-            } else {
-                scoreboard.put("Player", scoreboard.getOrDefault("Player", 0) + 1);
-            }
-        } else {
-            if (winner.equals("Player 1")) {
-                scoreboard.put("Player 1", scoreboard.getOrDefault("Player 1", 0) + 1);
-            } else {
-                scoreboard.put("Player 2", scoreboard.getOrDefault("Player 2", 0) + 1);
-            }
-        }
-        updateScoreLabels();
-    }
-
-    public void updateScoreLabels() {
-        if (vsComputerMode) {
-            player1ScoreLabel.setText("Player (X): " + scoreboard.getOrDefault("Player", 0));
-            player2ScoreLabel.setText("Computer (O): " + scoreboard.getOrDefault("Computer", 0));
-        } else {
-            player1ScoreLabel.setText("Player 1 (X): " + scoreboard.getOrDefault("Player 1", 0));
-            player2ScoreLabel.setText("Player 2 (O): " + scoreboard.getOrDefault("Player 2", 0));
-        }
-    }
-
-    // update part ends
 
     private static final int[][] WIN_CONDITIONS = {
             { 0, 1, 2 }, { 3, 4, 5 }, { 6, 7, 8 }, { 0, 3, 6 }, { 1, 4, 7 }, { 2, 5, 8 }, { 0, 4, 8 }, { 2, 4, 6 }
