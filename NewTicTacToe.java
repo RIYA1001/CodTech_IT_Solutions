@@ -191,243 +191,75 @@ public class NewTicTacToe implements ActionListener {
         }
     }
 
+    // Computer move starts
+
     private void computerMove() {
-        int index = -1;
-
-        // Check if player clicked on button 1
-        if (buttons[0].getText().equals("X")) {
-            // If button 5 is not selected, make a move on button 5
-            if (!buttons[4].getText().equals("")) {
-                // If button 2 is not selected, make a move on button 2
-                if (!buttons[1].getText().equals("")) {
-                    // If button 4 is not selected, make a move on button 4
-                    if (!buttons[3].getText().equals("")) {
-                        // If none of the preferred moves are available, make a random move
-                        do {
-                            index = random.nextInt(9);
-                        } while (!buttons[index].getText().equals(""));
-                    } else {
-                        index = 3;
-                    }
-                } else {
-                    index = 1;
-                }
-            } else {
-                index = 4;
+        // Check if all buttons are selected
+        boolean allButtonsSelected = true;
+        for (int i = 0; i < 9; i++) {
+            if (buttons[i].getText().equals("")) {
+                allButtonsSelected = false;
+                break;
             }
         }
 
-        // Check if player clicked on button 2
-        else if (buttons[1].getText().equals("X")) {
-            // If button 1 is not selected, make a move on button 1
-            if (!buttons[0].getText().equals("")) {
-                // If button 5 is not selected, make a move on button 5
-                if (!buttons[4].getText().equals("")) {
-                    // If button 7 is not selected, make a move on button 7
-                    if (!buttons[6].getText().equals("")) {
-                        // If none of the preferred moves are available, make a random move
-                        do {
-                            index = random.nextInt(9);
-                        } while (!buttons[index].getText().equals(""));
-                    } else {
-                        index = 6;
-                    }
-                } else {
-                    index = 4;
-                }
-            } else {
-                index = 0;
-            }
+        if (allButtonsSelected) {
+            // All buttons are selected, it's a draw
+            textfield.setText("Draw");
+            disableButtons();
+            return;
         }
 
-        // Check if player clicked on button 3
-        else if (buttons[2].getText().equals("X")) {
-            // If button 5 is not selected, make a move on button 5
-            if (!buttons[4].getText().equals("")) {
-                // If button 1 is not selected, make a move on button 1
-                if (!buttons[0].getText().equals("")) {
-                    // If button 3 is not selected, make a move on button 3
-                    if (!buttons[2].getText().equals("")) {
-                        // If none of the preferred moves are available, make a random move
-                        do {
-                            index = random.nextInt(9);
-                        } while (!buttons[index].getText().equals(""));
-                    } else {
-                        index = 2;
-                    }
-                } else {
-                    index = 0;
-                }
-            } else {
-                index = 4;
-            }
-        }
-
-        // Check if player clicked on button 4
-        else if (buttons[3].getText().equals("X")) {
-            // If button 5 is not selected, make a move on button 5
-            if (!buttons[4].getText().equals("")) {
-                // If button 1 is not selected, make a move on button 1
-                if (!buttons[0].getText().equals("")) {
-                    // If button 7 is not selected, make a move on button 7
-                    if (!buttons[6].getText().equals("")) {
-                        // If none of the preferred moves are available, make a random move
-                        do {
-                            index = random.nextInt(9);
-                        } while (!buttons[index].getText().equals(""));
-                    } else {
-                        index = 6;
-                    }
-                } else {
-                    index = 0;
-                }
-            } else {
-                index = 4;
-            }
-        }
-
-        // Check if player clicked on button 5
-        else if (buttons[4].getText().equals("X")) {
-            // If button 1 is selected, make a move on button 9
-            if (buttons[0].getText().equals("X")) {
-                index = 8;
-            }
-            // If button 3 is selected, make a move on button 7
-            else if (buttons[2].getText().equals("X")) {
-                index = 6;
-            }
-            // If button 2 is selected, make a move on button 8
-            else if (buttons[1].getText().equals("X")) {
-                index = 7;
-            }
-            // If button 4 is selected, make a move on button 6
-            else if (buttons[3].getText().equals("X")) {
-                index = 5;
-            }
-            // If button 9 is selected, make a move on button 1
-            else if (buttons[8].getText().equals("X")) {
-                index = 0;
-            }
-            // If button 7 is selected, make a move on button 3
-            else if (buttons[6].getText().equals("X")) {
-                index = 2;
-            }
-            // If button 8 is selected, make a move on button 2
-            else if (buttons[7].getText().equals("X")) {
-                index = 1;
-            }
-            // If button 6 is selected, make a move on button 4
-            else if (buttons[5].getText().equals("X")) {
-                index = 3;
-            }
-        }
-
-        // Check if player clicked on button 6
-        else if (buttons[5].getText().equals("X")) {
-            // If button 5 is not selected, make a move on button 5
-            if (!buttons[4].getText().equals("")) {
-                // If button 9 is not selected, make a move on button 9
-                if (!buttons[8].getText().equals("")) {
-                    // If button 3 is not selected, make a move on button 3
-                    if (!buttons[2].getText().equals("")) {
-                        // If none of the preferred moves are available, make a random move
-                        do {
-                            index = random.nextInt(9);
-                        } while (!buttons[index].getText().equals(""));
-                    } else {
-                        index = 2;
-                    }
-                } else {
-                    index = 8;
-                }
-            } else {
-                index = 4;
-            }
-        }
-
-        // Check if player clicked on button 7
-        else if (buttons[6].getText().equals("X")) {
-            // If button 5 is not selected, make a move on button 5
-            if (!buttons[4].getText().equals("")) {
-                // If button 4 is not selected, make a move on button 4
-                if (!buttons[3].getText().equals("")) {
-                    // If button 8 is not selected, make a move on button 8
-                    if (!buttons[7].getText().equals("")) {
-                        // If none of the preferred moves are available, make a random move
-                        do {
-                            index = random.nextInt(9);
-                        } while (!buttons[index].getText().equals(""));
-                    } else {
-                        index = 7;
-                    }
-                } else {
-                    index = 3;
-                }
-            } else {
-                index = 4;
-            }
-        }
-
-        // Check if player clicked on button 8
-        else if (buttons[7].getText().equals("X")) {
-            // If button 5 is not selected, make a move on button 5
-            if (!buttons[4].getText().equals("")) {
-                // If button 7 is not selected, make a move on button 7
-                if (!buttons[6].getText().equals("")) {
-                    // If button 9 is not selected, make a move on button 9
-                    if (!buttons[8].getText().equals("")) {
-                        // If none of the preferred moves are available, make a random move
-                        do {
-                            index = random.nextInt(9);
-                        } while (!buttons[index].getText().equals(""));
-                    } else {
-                        index = 8;
-                    }
-                } else {
-                    index = 6;
-                }
-            } else {
-                index = 4;
-            }
-        }
-
-        // Check if player clicked on button 9
-        else if (buttons[8].getText().equals("X")) {
-            // If button 5 is not selected, make a move on button 5
-            if (!buttons[4].getText().equals("")) {
-                // If button 8 is not selected, make a move on button 8
-                if (!buttons[7].getText().equals("")) {
-                    // If button 6 is not selected, make a move on button 6
-                    if (!buttons[5].getText().equals("")) {
-                        // If none of the preferred moves are available, make a random move
-                        do {
-                            index = random.nextInt(9);
-                        } while (!buttons[index].getText().equals(""));
-                    } else {
-                        index = 5;
-                    }
-                } else {
-                    index = 7;
-                }
-            } else {
-                index = 4;
-            }
-        }
-
-        // Default random move if not in the specified conditions
+        int index = findWinningMove("O");
         if (index == -1) {
-            do {
-                index = random.nextInt(9);
-            } while (!buttons[index].getText().equals(""));
+            index = findWinningMove("X");
+            if (index == -1) {
+                index = findBlockingMove("O");
+                if (index == -1) {
+                    index = findBlockingMove("X");
+                    if (index == -1) {
+                        // Find a random available button
+                        do {
+                            index = random.nextInt(9);
+                        } while (!buttons[index].getText().equals(""));
+                    }
+                }
+            }
         }
 
         buttons[index].setForeground(new Color(0, 0, 255));
         buttons[index].setText("O");
         player1_turn = true;
         textfield.setText("Player (X) turn");
-        playerMoveMade = false; // Reset player move flag
+        playerMoveMade = false;
         check();
     }
+
+    private int findWinningMove(String symbol) {
+        for (int[] winCondition : WIN_CONDITIONS) {
+            int emptyCount = 0;
+            int emptyIndex = -1;
+
+            for (int index : winCondition) {
+                if (buttons[index].getText().equals(symbol)) {
+                    emptyCount++;
+                } else if (buttons[index].getText().equals("")) {
+                    emptyIndex = index;
+                }
+            }
+
+            if (emptyCount == 2 && emptyIndex != -1) {
+                return emptyIndex;
+            }
+        }
+        return -1;
+    }
+
+    private int findBlockingMove(String symbol) {
+        return findWinningMove(symbol.equals("O") ? "X" : "O");
+    }
+
+    // computer move ends
 
     public void firstTurn() {
         try {
@@ -449,35 +281,24 @@ public class NewTicTacToe implements ActionListener {
 
     public void check() {
         boolean draw = true;
-        for (int i = 0; i < 9; i++) {
-            if (buttons[i].getText().equals("")) {
+        for (int[] winCondition : WIN_CONDITIONS) {
+            String symbol = buttons[winCondition[0]].getText();
+            if (!symbol.equals("") &&
+                    buttons[winCondition[1]].getText().equals(symbol) &&
+                    buttons[winCondition[2]].getText().equals(symbol)) {
+                highlightWinningCells(winCondition);
+                updateScore(symbolToPlayer.get(symbol));
+                return;
+            }
+            if (symbol.equals("") || buttons[winCondition[1]].getText().equals("")
+                    || buttons[winCondition[2]].getText().equals("")) {
                 draw = false;
-                break;
             }
         }
 
         if (draw) {
             textfield.setText("Draw");
             disableButtons();
-        } else {
-            if (vsComputerMode) {
-                checkForWin("O", "Computer");
-            } else {
-                checkForWin("X", "Player 1");
-                checkForWin("O", "Player 2");
-            }
-        }
-    }
-
-    private void checkForWin(String symbol, String playerName) {
-        for (int[] winCondition : WIN_CONDITIONS) {
-            if (buttons[winCondition[0]].getText().equals(symbol) &&
-                    buttons[winCondition[1]].getText().equals(symbol) &&
-                    buttons[winCondition[2]].getText().equals(symbol)) {
-                highlightWinningCells(winCondition);
-                updateScore(playerName);
-                return;
-            }
         }
     }
 
