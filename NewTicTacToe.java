@@ -31,7 +31,7 @@ public class NewTicTacToe implements ActionListener {
         frame.setLayout(new BorderLayout());
         frame.setVisible(true);
         frame.setTitle("Riya - TIC TAC TOE Game");
-        
+
         textfield.setBackground(new Color(25, 25, 25));
         textfield.setForeground(new Color(25, 255, 0));
         textfield.setFont(new Font("Ink Free", Font.BOLD, 35));
@@ -43,7 +43,6 @@ public class NewTicTacToe implements ActionListener {
 
         title_panel.setLayout(new BorderLayout());
         title_panel.setBounds(0, 0, 800, 100);
-        
 
         // for X & O
 
@@ -60,18 +59,16 @@ public class NewTicTacToe implements ActionListener {
             buttons[i].setFocusable(false);
             buttons[i].addActionListener(this);
         }
-     
+
         frame.add(leftEmptyPanel, BorderLayout.WEST);
         frame.add(button_panel, BorderLayout.CENTER);
         frame.add(rightEmptyPanel, BorderLayout.EAST);
-        
 
         // for title
 
         title_panel.add(textfield, BorderLayout.NORTH);
         frame.add(title_panel, BorderLayout.NORTH);
-        //frame.add(button_panel);
-           
+        // frame.add(button_panel);
 
         // for score board
 
@@ -82,7 +79,6 @@ public class NewTicTacToe implements ActionListener {
         title_panel.add(scorePanel, BorderLayout.SOUTH);
         int vertiGap = 10;
         scorePanel.setBorder(BorderFactory.createEmptyBorder(vertiGap, 0, vertiGap, 0));
-
 
         // for reset and exit button
 
@@ -99,12 +95,10 @@ public class NewTicTacToe implements ActionListener {
         int vGap = 5;
         bottomPanel.setBorder(BorderFactory.createEmptyBorder(vGap, 0, vGap, 0));
 
-
         frame.add(bottomPanel, BorderLayout.SOUTH);
-        
+
         resetButton.addActionListener(this);
         exitButton.addActionListener(this);
-        
 
         // for vs button
 
@@ -120,7 +114,7 @@ public class NewTicTacToe implements ActionListener {
         buttonPanel.setBackground(Color.BLACK);
 
         title_panel.add(buttonPanel, BorderLayout.CENTER);
-   
+
         vsComputerButton.addActionListener(this);
         vsPlayerButton.addActionListener(this);
 
@@ -159,11 +153,10 @@ public class NewTicTacToe implements ActionListener {
                 }
             }
         }
-    }    
-    
+    }
+
     private boolean playerMoveMade = false;
-    
-    
+
     private void handleVsComputerMove(int index) {
         if (!playerMoveMade && buttons[index].getText().equals("")) {
             buttons[index].setForeground(new Color(255, 0, 0));
@@ -173,11 +166,10 @@ public class NewTicTacToe implements ActionListener {
             playerMoveMade = true;
             check();
             computerMove();
-           
+
         }
     }
 
-  
     private void handleVsPlayerMove(int index) {
         if (player1_turn && buttons[index].getText().equals("")) {
             buttons[index].setForeground(new Color(255, 0, 0));
@@ -198,11 +190,9 @@ public class NewTicTacToe implements ActionListener {
         }
     }
 
-
-    
     private void computerMove() {
         int index = -1;
-        
+
         // Check if player clicked on button 1
         if (buttons[0].getText().equals("X")) {
             // If button 5 is not selected, make a move on button 5
@@ -225,7 +215,7 @@ public class NewTicTacToe implements ActionListener {
                 index = 4;
             }
         }
-        
+
         // Check if player clicked on button 2
         else if (buttons[1].getText().equals("X")) {
             // If button 1 is not selected, make a move on button 1
@@ -248,7 +238,6 @@ public class NewTicTacToe implements ActionListener {
                 index = 0;
             }
         }
-        
 
         // Check if player clicked on button 3
         else if (buttons[2].getText().equals("X")) {
@@ -272,8 +261,7 @@ public class NewTicTacToe implements ActionListener {
                 index = 4;
             }
         }
-        
-        
+
         // Check if player clicked on button 4
         else if (buttons[3].getText().equals("X")) {
             // If button 5 is not selected, make a move on button 5
@@ -296,7 +284,7 @@ public class NewTicTacToe implements ActionListener {
                 index = 4;
             }
         }
-        
+
         // Check if player clicked on button 5
         else if (buttons[4].getText().equals("X")) {
             // If button 1 is selected, make a move on button 9
@@ -332,7 +320,7 @@ public class NewTicTacToe implements ActionListener {
                 index = 3;
             }
         }
-        
+
         // Check if player clicked on button 6
         else if (buttons[5].getText().equals("X")) {
             // If button 5 is not selected, make a move on button 5
@@ -355,7 +343,7 @@ public class NewTicTacToe implements ActionListener {
                 index = 4;
             }
         }
-        
+
         // Check if player clicked on button 7
         else if (buttons[6].getText().equals("X")) {
             // If button 5 is not selected, make a move on button 5
@@ -378,7 +366,7 @@ public class NewTicTacToe implements ActionListener {
                 index = 4;
             }
         }
-        
+
         // Check if player clicked on button 8
         else if (buttons[7].getText().equals("X")) {
             // If button 5 is not selected, make a move on button 5
@@ -401,7 +389,7 @@ public class NewTicTacToe implements ActionListener {
                 index = 4;
             }
         }
-        
+
         // Check if player clicked on button 9
         else if (buttons[8].getText().equals("X")) {
             // If button 5 is not selected, make a move on button 5
@@ -425,7 +413,6 @@ public class NewTicTacToe implements ActionListener {
             }
         }
 
-
         // Default random move if not in the specified conditions
         if (index == -1) {
             do {
@@ -440,8 +427,6 @@ public class NewTicTacToe implements ActionListener {
         playerMoveMade = false; // Reset player move flag
         check();
     }
-
-    
 
     public void firstTurn() {
         try {
@@ -474,7 +459,7 @@ public class NewTicTacToe implements ActionListener {
             textfield.setText("Draw");
             disableButtons();
         } else {
-        	if (vsComputerMode) {
+            if (vsComputerMode) {
                 checkForWin("O", "Computer");
             } else {
                 checkForWin("X", "Player 1");
@@ -506,15 +491,11 @@ public class NewTicTacToe implements ActionListener {
         updateScore(winnerName);
     }
 
-    
     private void disableButtons() {
         for (int i = 0; i < 9; i++) {
             buttons[i].setEnabled(false);
         }
     }
-    
-    
-    
 
     public void resetGame() {
         for (int i = 0; i < 9; i++) {
@@ -524,7 +505,7 @@ public class NewTicTacToe implements ActionListener {
         }
         firstTurn();
     }
-    
+
     private void resetScoreboard() {
         if (vsComputerMode) {
             scoreboard.put("Player", 0);
@@ -540,8 +521,7 @@ public class NewTicTacToe implements ActionListener {
         updateScoreLabels();
         resetCommon();
     }
-    
-    
+
     private void resetCommon() {
         for (int i = 0; i < 9; i++) {
             buttons[i].setText("");
@@ -550,9 +530,6 @@ public class NewTicTacToe implements ActionListener {
         }
         firstTurn();
     }
-    
-    
-    
 
     private void updateScore(String winner) {
         if (vsComputerMode) {
@@ -582,7 +559,7 @@ public class NewTicTacToe implements ActionListener {
         player1ScoreLabel.setForeground(Color.WHITE);
         player2ScoreLabel.setForeground(Color.WHITE);
     }
-    
+
     private void updateScoreLabelsForComputerMode() {
         player1ScoreLabel.setText("Player (X): 0");
         player2ScoreLabel.setText("Computer (O): 0");
@@ -592,17 +569,10 @@ public class NewTicTacToe implements ActionListener {
         player1ScoreLabel.setText("Player 1 (X): 0");
         player2ScoreLabel.setText("Player 2 (O): 0");
     }
-   
-    
- 
 
-
-        
     private static final int[][] WIN_CONDITIONS = {
-            {0, 1, 2}, {3, 4, 5}, {6, 7, 8}, {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, {0, 4, 8}, {2, 4, 6}
+            { 0, 1, 2 }, { 3, 4, 5 }, { 6, 7, 8 }, { 0, 3, 6 }, { 1, 4, 7 }, { 2, 5, 8 }, { 0, 4, 8 }, { 2, 4, 6 }
     };
-
-    
 
     private final Map<String, String> symbolToPlayer = createSymbolToPlayerMap();
 
@@ -613,9 +583,9 @@ public class NewTicTacToe implements ActionListener {
             return Map.of("X", "Player 1", "O", "Player 2");
         }
     }
-    
+
     public static void main(String[] args) {
         new NewTicTacToe();
     }
-    
+
 }
