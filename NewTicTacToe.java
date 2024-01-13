@@ -267,13 +267,13 @@ public class NewTicTacToe implements ActionListener {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        if (random.nextInt(2) == 0) {
-            player1_turn = true;
+        player1_turn = random.nextInt(2) == 0;
+
+        if (player1_turn) {
             textfield.setText("Player 1 (X) turn");
         } else {
-            player1_turn = false;
             textfield.setText("Player 2 (O) turn");
-            if (!player1_turn && vsComputerMode) {
+            if (vsComputerMode) {
                 computerMove();
             }
         }
@@ -287,7 +287,7 @@ public class NewTicTacToe implements ActionListener {
                     buttons[winCondition[1]].getText().equals(symbol) &&
                     buttons[winCondition[2]].getText().equals(symbol)) {
                 highlightWinningCells(winCondition);
-                updateScore(symbolToPlayer.get(symbol));
+                handleWin(symbol);
                 return;
             }
             if (symbol.equals("") || buttons[winCondition[1]].getText().equals("")
@@ -302,13 +302,21 @@ public class NewTicTacToe implements ActionListener {
         }
     }
 
+    private void handleWin(String symbol) {
+        String winnerName = vsComputerMode ? (symbol.equals("X") ? "Player" : "Computer")
+                : (symbol.equals("X") ? "Player 1" : "Player 2");
+        textfield.setText(winnerName + " wins");
+        updateScore(winnerName);
+    }
+
     private void highlightWinningCells(int[] winCondition) {
         String winnerSymbol = buttons[winCondition[0]].getText();
         for (int index : winCondition) {
             buttons[index].setBackground(Color.YELLOW);
         }
         disableButtons();
-        String winnerName = symbolToPlayer.get(winnerSymbol);
+        String winnerName = vsComputerMode ? (winnerSymbol.equals("X") ? "Player" : "Computer")
+                : (winnerSymbol.equals("X") ? "Player 1" : "Player 2");
         textfield.setText(winnerName + " wins");
         updateScore(winnerName);
     }
@@ -384,7 +392,6 @@ public class NewTicTacToe implements ActionListener {
             player1ScoreLabel.setText("Player 1 (X): " + scoreboard.getOrDefault("Player 1", 0));
             player2ScoreLabel.setText("Player 2 (O): " + scoreboard.getOrDefault("Player 2", 0));
         }
-
     }
 
     // update part ends
