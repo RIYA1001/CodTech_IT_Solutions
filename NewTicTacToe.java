@@ -68,7 +68,6 @@ public class NewTicTacToe implements ActionListener {
 
         title_panel.add(textfield, BorderLayout.NORTH);
         frame.add(title_panel, BorderLayout.NORTH);
-        // frame.add(button_panel);
 
         // for score board
 
@@ -77,6 +76,8 @@ public class NewTicTacToe implements ActionListener {
         scorePanel.add(player2ScoreLabel);
         scorePanel.setBackground(Color.BLACK);
         title_panel.add(scorePanel, BorderLayout.SOUTH);
+        player1ScoreLabel.setForeground(Color.WHITE);
+        player2ScoreLabel.setForeground(Color.WHITE);
         int vertiGap = 10;
         scorePanel.setBorder(BorderFactory.createEmptyBorder(vertiGap, 0, vertiGap, 0));
 
@@ -423,7 +424,7 @@ public class NewTicTacToe implements ActionListener {
         buttons[index].setForeground(new Color(0, 0, 255));
         buttons[index].setText("O");
         player1_turn = true;
-        textfield.setText("Player 1 (X) turn");
+        textfield.setText("Player (X) turn");
         playerMoveMade = false; // Reset player move flag
         check();
     }
@@ -497,6 +498,8 @@ public class NewTicTacToe implements ActionListener {
         }
     }
 
+    // reset part starts
+
     public void resetGame() {
         for (int i = 0; i < 9; i++) {
             buttons[i].setText("");
@@ -531,6 +534,10 @@ public class NewTicTacToe implements ActionListener {
         firstTurn();
     }
 
+    // reset part ends
+
+    // Update part starts
+
     private void updateScore(String winner) {
         if (vsComputerMode) {
             if (winner.equals("Computer")) {
@@ -556,19 +563,10 @@ public class NewTicTacToe implements ActionListener {
             player1ScoreLabel.setText("Player 1 (X): " + scoreboard.getOrDefault("Player 1", 0));
             player2ScoreLabel.setText("Player 2 (O): " + scoreboard.getOrDefault("Player 2", 0));
         }
-        player1ScoreLabel.setForeground(Color.WHITE);
-        player2ScoreLabel.setForeground(Color.WHITE);
+
     }
 
-    private void updateScoreLabelsForComputerMode() {
-        player1ScoreLabel.setText("Player (X): 0");
-        player2ScoreLabel.setText("Computer (O): 0");
-    }
-
-    private void updateScoreLabelsForPlayerMode() {
-        player1ScoreLabel.setText("Player 1 (X): 0");
-        player2ScoreLabel.setText("Player 2 (O): 0");
-    }
+    // update part ends
 
     private static final int[][] WIN_CONDITIONS = {
             { 0, 1, 2 }, { 3, 4, 5 }, { 6, 7, 8 }, { 0, 3, 6 }, { 1, 4, 7 }, { 2, 5, 8 }, { 0, 4, 8 }, { 2, 4, 6 }
