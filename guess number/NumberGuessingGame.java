@@ -10,11 +10,11 @@ public class NumberGuessingGame extends JFrame {
     private int randomNumber;
     private int attemptsLeft;
     private JTextField guessField;
-    private JTextArea resultArea;
+    private JLabel resultLabel;
 
     public NumberGuessingGame() {
         setTitle("Riya - Number Guessing Game");
-        setSize(600, 400);
+        setSize(600, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -38,37 +38,32 @@ public class NumberGuessingGame extends JFrame {
         panel.setLayout(null);
 
         JLabel guessLabel = new JLabel("Enter your guess:");
-        guessLabel.setBounds(100, 40, 270, 50);
+        guessLabel.setBounds(100, 30, 270, 50);
         guessLabel.setFont(new Font("Arial", Font.BOLD, 20));
 
         guessField = new JTextField();
-        guessField.setBounds(350, 40, 70, 50);
+        guessField.setBounds(350, 30, 70, 45);
         guessField.setFont(new Font("Arial", Font.BOLD, 20));
 
         JButton guessButton = new JButton("GUESS");
-        guessButton.setBounds(70, 120, 200, 50);
+        guessButton.setBounds(80, 110, 200, 50);
         guessButton.setBackground(new Color(152, 251, 152)); // Peace color
         guessButton.setFont(new Font("Arial", Font.BOLD, 25));
         guessButton.addActionListener(new GuessButtonListener());
 
         JButton playAgainButton = new JButton("Play Again");
-        playAgainButton.setBounds(300, 120, 200, 50);
+        playAgainButton.setBounds(310, 110, 200, 50);
         playAgainButton.setBackground(new Color(173, 216, 230)); // Light blue color
         playAgainButton.setFont(new Font("Arial", Font.BOLD, 25)); // Bold text
         playAgainButton.addActionListener(new PlayAgainButtonListener());
 
         // Horizontal line
         JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
-        separator.setBounds(20, 200, 560, 10);
+        separator.setBounds(20, 190, 560, 10);
 
-        JLabel resultLabel = new JLabel("Result");
-        resultLabel.setBounds(250, 200, 100, 50);
+        resultLabel = new JLabel();
+        resultLabel.setBounds(50, 200, 500, 50);
         resultLabel.setFont(new Font("Arial", Font.BOLD, 20));
-
-        resultArea = new JTextArea();
-        resultArea.setBounds(50, 240, 500, 50);
-        resultArea.setEditable(false);
-        resultArea.setFont(new Font("Arial", Font.BOLD, 20));
 
         panel.add(guessLabel);
         panel.add(guessField);
@@ -76,7 +71,6 @@ public class NumberGuessingGame extends JFrame {
         panel.add(playAgainButton);
         panel.add(separator);
         panel.add(resultLabel);
-        panel.add(resultArea);
 
         add(panel);
 
@@ -95,7 +89,7 @@ public class NumberGuessingGame extends JFrame {
                 int guess = Integer.parseInt(guessField.getText());
                 checkGuess(guess);
             } catch (NumberFormatException ex) {
-                resultArea.setText("Invalid input. Please enter a number.");
+                resultLabel.setText("Invalid input. Please enter a number.");
             }
         }
     }
@@ -104,7 +98,7 @@ public class NumberGuessingGame extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             initializeGame();
-            resultArea.setText("");
+            resultLabel.setText("");
             guessField.setText("");
             guessField.requestFocus();
         }
@@ -114,16 +108,16 @@ public class NumberGuessingGame extends JFrame {
         attemptsLeft--;
 
         if (guess == randomNumber) {
-            resultArea.setText("Congratulations! You guessed the correct number.");
+            resultLabel.setText("Congratulations! You guessed the correct number.");
             saveScore(attemptsLeft, randomNumber);
             initializeGame();
         } else {
             String hint = (guess < randomNumber) ? "Too low" : "Too high";
-            resultArea.setText(String.format("%s. Attempts left: %d", hint, attemptsLeft));
+            resultLabel.setText(String.format("%s. Attempts left: %d", hint, attemptsLeft));
 
             if (attemptsLeft == 0) {
-                resultArea.append(
-                        String.format("\nSorry, you've run out of attempts. The correct number was %d.", randomNumber));
+                resultLabel.setText(
+                        String.format("Sorry, you've run out of attempts. The correct number was %d.", randomNumber));
                 saveScore(attemptsLeft, randomNumber); // Save even if the player runs out of attempts
                 initializeGame();
             }
