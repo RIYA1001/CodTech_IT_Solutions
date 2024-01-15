@@ -55,7 +55,6 @@ public class NumberGuessingGame extends JFrame {
         playAgainButton.setBounds(300, 120, 200, 50);
         playAgainButton.addActionListener(new PlayAgainButtonListener());
 
-        // Horizontal line
         JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
         separator.setBounds(20, 190, 560, 10);
 
@@ -71,7 +70,6 @@ public class NumberGuessingGame extends JFrame {
         panel.add(resultLabel);
 
         add(panel);
-
         setVisible(true);
     }
 
@@ -85,8 +83,6 @@ public class NumberGuessingGame extends JFrame {
         button.setBackground(new Color(152, 251, 152));
         button.setForeground(Color.BLACK);
         button.setFont(new Font("Arial", Font.BOLD, 25));
-        button.setBorderPainted(false);
-        button.setFocusPainted(false);
 
         button.addMouseListener(new MouseAdapter() {
             @Override
@@ -121,6 +117,7 @@ public class NumberGuessingGame extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             initializeGame();
+            guessField.setEnabled(true);
             resultLabel.setText("");
             guessField.setText("");
             guessField.requestFocus();
@@ -134,6 +131,7 @@ public class NumberGuessingGame extends JFrame {
             resultLabel.setText("Congratulations! You guessed the correct number.");
             saveScore(attemptsLeft, randomNumber);
             initializeGame();
+            guessField.setEnabled(false);
         } else {
             int nearThreshold = 2; // Adjust this threshold as needed
             int difference = Math.abs(randomNumber - guess);
@@ -152,6 +150,7 @@ public class NumberGuessingGame extends JFrame {
                         String.format("Sorry, you've run out of attempts. The correct number was %d.", randomNumber));
                 saveScore(attemptsLeft, randomNumber);
                 initializeGame();
+                guessField.setEnabled(false);
             }
         }
 

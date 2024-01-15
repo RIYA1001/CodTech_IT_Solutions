@@ -10,7 +10,6 @@ public class CaesarCipher {
         
         Scanner sc = new Scanner(System.in);
         
-		
 		if(choice==1) {
 		System.out.print("Enter a message to encrypt : ");
 		String msg = sc.nextLine();
@@ -29,13 +28,11 @@ public class CaesarCipher {
         System.out.println("Decrypted message : " + decryptedMessage);
 		}
 		
-		
 		else {
 			System.out.println("Please enter a valid number.");
 		}
 	}
-			
-		
+				
 	public static String encrypt(String msg, int key) {
 		
 		StringBuilder encryptedMessage = new StringBuilder();
@@ -45,14 +42,10 @@ public class CaesarCipher {
 			if(Character.isLetter(c)) {
 				c = (char)((c - 'a' + key + 26) % 26 + 'a');
 			}
-			
 			encryptedMessage.append(c);
 		}
-		
 		return encryptedMessage.toString();
-		
 	}
-
 
     public static String decrypt(String msg, int key) {
 		
@@ -63,16 +56,9 @@ public class CaesarCipher {
 			if(Character.isLetter(c)) {
 				c = (char)((c - 'a' - key + 26) % 26 + 'a');
 			}
-			
 			decryptedMessage.append(c);
 		}
-		
 		return decryptedMessage.toString();
-		
 	}
 
 }
-
-
-
-
