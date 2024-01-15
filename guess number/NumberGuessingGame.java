@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -45,16 +47,12 @@ public class NumberGuessingGame extends JFrame {
         guessField.setBounds(350, 30, 70, 45);
         guessField.setFont(new Font("Arial", Font.BOLD, 20));
 
-        JButton guessButton = new JButton("GUESS");
-        guessButton.setBounds(80, 110, 200, 50);
-        guessButton.setBackground(new Color(152, 251, 152)); // Peace color
-        guessButton.setFont(new Font("Arial", Font.BOLD, 25));
+        JButton guessButton = createStyledButton("GUESS");
+        guessButton.setBounds(70, 120, 200, 50);
         guessButton.addActionListener(new GuessButtonListener());
 
-        JButton playAgainButton = new JButton("Play Again");
-        playAgainButton.setBounds(310, 110, 200, 50);
-        playAgainButton.setBackground(new Color(173, 216, 230)); // Light blue color
-        playAgainButton.setFont(new Font("Arial", Font.BOLD, 25)); // Bold text
+        JButton playAgainButton = createStyledButton("Play Again");
+        playAgainButton.setBounds(300, 120, 200, 50);
         playAgainButton.addActionListener(new PlayAgainButtonListener());
 
         // Horizontal line
@@ -63,7 +61,7 @@ public class NumberGuessingGame extends JFrame {
 
         resultLabel = new JLabel();
         resultLabel.setBounds(50, 200, 500, 50);
-        resultLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        resultLabel.setFont(new Font("Arial", Font.BOLD, 15));
 
         panel.add(guessLabel);
         panel.add(guessField);
@@ -80,6 +78,31 @@ public class NumberGuessingGame extends JFrame {
     private void initializeGame() {
         randomNumber = (int) (Math.random() * 100) + 1;
         attemptsLeft = 10;
+    }
+
+    private JButton createStyledButton(String text) {
+        JButton button = new JButton(text);
+        button.setBackground(new Color(152, 251, 152));
+        button.setForeground(Color.BLACK);
+        button.setFont(new Font("Arial", Font.BOLD, 25));
+        button.setBorderPainted(false);
+        button.setFocusPainted(false);
+
+        button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                button.setBackground(Color.BLACK);
+                button.setForeground(new Color(152, 251, 152));
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                button.setBackground(new Color(152, 251, 152));
+                button.setForeground(Color.BLACK);
+            }
+        });
+
+        return button;
     }
 
     private class GuessButtonListener implements ActionListener {
@@ -112,13 +135,22 @@ public class NumberGuessingGame extends JFrame {
             saveScore(attemptsLeft, randomNumber);
             initializeGame();
         } else {
-            String hint = (guess < randomNumber) ? "Too low" : "Too high";
+            int nearThreshold = 2; // Adjust this threshold as needed
+            int difference = Math.abs(randomNumber - guess);
+
+            String hint;
+            if (difference <= nearThreshold) {
+                hint = "You are near";
+            } else {
+                hint = (guess < randomNumber) ? "Too low" : "Too high";
+            }
+
             resultLabel.setText(String.format("%s. Attempts left: %d", hint, attemptsLeft));
 
             if (attemptsLeft == 0) {
                 resultLabel.setText(
                         String.format("Sorry, you've run out of attempts. The correct number was %d.", randomNumber));
-                saveScore(attemptsLeft, randomNumber); // Save even if the player runs out of attempts
+                saveScore(attemptsLeft, randomNumber);
                 initializeGame();
             }
         }
