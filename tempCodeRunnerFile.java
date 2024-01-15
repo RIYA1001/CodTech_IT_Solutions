@@ -14,7 +14,7 @@ public class NumberGuessingGame extends JFrame {
 
     public NumberGuessingGame() {
         setTitle("Riya - Number Guessing Game");
-        setSize(600, 400);
+        setSize(550, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -38,37 +38,33 @@ public class NumberGuessingGame extends JFrame {
         panel.setLayout(null);
 
         JLabel guessLabel = new JLabel("Enter your guess:");
-        guessLabel.setBounds(100, 40, 270, 50);
-        guessLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        guessLabel.setBounds(100, 30, 150, 30);
 
         guessField = new JTextField();
-        guessField.setBounds(350, 40, 70, 50);
-        guessField.setFont(new Font("Arial", Font.BOLD, 20));
+        guessField.setBounds(250, 30, 50, 30);
 
         JButton guessButton = new JButton("GUESS");
-        guessButton.setBounds(70, 120, 200, 50);
+        guessButton.setBounds(100, 80, 200, 50);
         guessButton.setBackground(new Color(152, 251, 152)); // Peace color
         guessButton.setFont(new Font("Arial", Font.BOLD, 25));
         guessButton.addActionListener(new GuessButtonListener());
 
         JButton playAgainButton = new JButton("Play Again");
-        playAgainButton.setBounds(300, 120, 200, 50);
+        playAgainButton.setBounds(250, 80, 200, 50);
         playAgainButton.setBackground(new Color(173, 216, 230)); // Light blue color
         playAgainButton.setFont(new Font("Arial", Font.BOLD, 25)); // Bold text
         playAgainButton.addActionListener(new PlayAgainButtonListener());
 
         // Horizontal line
         JSeparator separator = new JSeparator(SwingConstants.HORIZONTAL);
-        separator.setBounds(20, 200, 560, 10);
+        separator.setBounds(0, 140, 500, 10);
 
         JLabel resultLabel = new JLabel("Result");
-        resultLabel.setBounds(250, 200, 100, 50);
-        resultLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        resultLabel.setBounds(180, 150, 50, 30);
 
         resultArea = new JTextArea();
-        resultArea.setBounds(50, 240, 500, 50);
+        resultArea.setBounds(50, 180, 300, 30);
         resultArea.setEditable(false);
-        resultArea.setFont(new Font("Arial", Font.BOLD, 20));
 
         panel.add(guessLabel);
         panel.add(guessField);

@@ -1,1 +1,4 @@
 Attempts left: 2
+Attempts left: 8, Correct Number: 45
+Attempts left: 2, Correct Number: 62
+Attempts left: 4, Correct Number: 100
