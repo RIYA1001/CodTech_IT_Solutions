@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.border.Border;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,18 +10,27 @@ public class Calc extends JFrame {
     private String currentInput;
 
     public Calc() {
-        super("Scientific Calculator");
+
+        // designing start
+
+        super("Riya - Scientific Calculator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 600);
+        setSize(370, 500);
         setLayout(new BorderLayout());
+
+        currentInput = "";
 
         display = new JTextField();
         display.setEditable(false);
         display.setFont(new Font("Arial", Font.PLAIN, 24));
+        display.setPreferredSize(new Dimension(400, 70));
         add(display, BorderLayout.NORTH);
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(5, 5, 5, 5));
+        buttonPanel.setBackground(Color.BLACK);
+        Border border = BorderFactory.createLineBorder(Color.BLACK, 4);
+        buttonPanel.setBorder(border);
 
         String[] buttonLabels = {
                 "(", ")", "%", "/", "C",
@@ -32,12 +43,31 @@ public class Calc extends JFrame {
         for (String label : buttonLabels) {
             JButton button = new JButton(label);
             button.setFont(new Font("Arial", Font.PLAIN, 18));
+
+            button.setBackground(Color.GRAY);
+            button.setForeground(Color.WHITE);
+            button.setBorderPainted(false);
+
+            button.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    button.setBackground(Color.WHITE);
+                    button.setForeground(Color.GRAY);
+                }
+
+                public void mouseExited(java.awt.event.MouseEvent evt) {
+                    button.setBackground(Color.GRAY);
+                    button.setForeground(Color.WHITE);
+                }
+            });
+
             button.addActionListener(new ButtonClickListener());
             buttonPanel.add(button);
         }
 
         add(buttonPanel, BorderLayout.CENTER);
     }
+
+    // coding start
 
     private class ButtonClickListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
@@ -79,7 +109,8 @@ public class Calc extends JFrame {
             }
 
             boolean eat(int charToEat) {
-                while (ch == ' ') nextChar();
+                while (ch == ' ')
+                    nextChar();
                 if (ch == charToEat) {
                     nextChar();
                     return true;
@@ -90,31 +121,30 @@ public class Calc extends JFrame {
             double parse() {
                 nextChar();
                 double x = parseExpression();
-                if (pos < expression.length()) throw new RuntimeException("Unexpected: " + (char) ch);
+                if (pos < expression.length())
+                    throw new RuntimeException("Unexpected: " + (char) ch);
                 return x;
             }
 
             double parseExpression() {
-                double x = parseTerm();
-                for (; ; ) {
-                    if (eat('+')) x += parseTerm(); // addition
-                    else if (eat('-')) x -= parseTerm(); // subtraction
-                    else return x;
-                }
-            }
-
-            double parseTerm() {
                 double x = parseFactor();
-                for (; ; ) {
-                    if (eat('*')) x *= parseFactor(); // multiplication
-                    else if (eat('/')) x /= parseFactor(); // division
-                    else return x;
+                for (;;) {
+                    if (eat('+'))
+                        x += parseFactor(); // addition
+                    else if (eat('-'))
+                        x -= parseFactor(); // subtraction
+                    else if (eat('*'))
+                        x *= parseFactor(); // multiplication
+                    else if (eat('/'))
+                        x /= parseFactor(); // division
+                    else if (eat('%'))
+                        x %= parseFactor(); // modules
+                    else
+                        return x;
                 }
             }
 
             double parseFactor() {
-                if (eat('+')) return parseFactor(); // unary plus
-                if (eat('-')) return -parseFactor(); // unary minus
 
                 double x;
                 int startPos = this.pos;
@@ -122,10 +152,12 @@ public class Calc extends JFrame {
                     x = parseExpression();
                     eat(')');
                 } else if ((ch >= '0' && ch <= '9') || ch == '.') { // numbers
-                    while ((ch >= '0' && ch <= '9') || ch == '.') nextChar();
+                    while ((ch >= '0' && ch <= '9') || ch == '.')
+                        nextChar();
                     x = Double.parseDouble(expression.substring(startPos, this.pos));
                 } else if (ch >= 'a' && ch <= 'z') { // functions
-                    while (ch >= 'a' && ch <= 'z') nextChar();
+                    while (ch >= 'a' && ch <= 'z')
+                        nextChar();
                     String func = expression.substring(startPos, this.pos);
                     x = parseFactor();
                     switch (func) {
@@ -141,11 +173,7 @@ public class Calc extends JFrame {
                         case "tan":
                             x = Math.tan(Math.toRadians(x));
                             break;
-                        case "x^2":
-                            x = Math.pow(x, 2);
-                            break;
-                        case "x^y":
-                            eat('^');
+                        case "^":
                             x = Math.pow(x, parseFactor());
                             break;
                         default:
@@ -154,9 +182,6 @@ public class Calc extends JFrame {
                 } else {
                     throw new RuntimeException("Unexpected: " + (char) ch);
                 }
-
-                if (eat('^')) x = Math.pow(x, parseFactor()); // exponentiation
-
                 return x;
             }
         }.parse();
