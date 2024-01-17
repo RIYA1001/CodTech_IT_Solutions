@@ -15,7 +15,7 @@ public class Calc extends JFrame {
 
         super("Riya - Scientific Calculator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(370, 500);
+        setSize(350, 450);
         setLayout(new BorderLayout());
 
         currentInput = "";
@@ -27,10 +27,8 @@ public class Calc extends JFrame {
         add(display, BorderLayout.NORTH);
 
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(5, 5, 5, 5));
+        buttonPanel.setLayout(new GridLayout(5, 5));
         buttonPanel.setBackground(Color.BLACK);
-        Border border = BorderFactory.createLineBorder(Color.BLACK, 4);
-        buttonPanel.setBorder(border);
 
         String[] buttonLabels = {
                 "(", ")", "%", "/", "C",
@@ -43,23 +41,9 @@ public class Calc extends JFrame {
         for (String label : buttonLabels) {
             JButton button = new JButton(label);
             button.setFont(new Font("Arial", Font.PLAIN, 18));
-
-            button.setBackground(Color.GRAY);
+            button.setBackground(Color.BLACK);
             button.setForeground(Color.WHITE);
             button.setBorderPainted(false);
-
-            button.addMouseListener(new java.awt.event.MouseAdapter() {
-                public void mouseEntered(java.awt.event.MouseEvent evt) {
-                    button.setBackground(Color.WHITE);
-                    button.setForeground(Color.GRAY);
-                }
-
-                public void mouseExited(java.awt.event.MouseEvent evt) {
-                    button.setBackground(Color.GRAY);
-                    button.setForeground(Color.WHITE);
-                }
-            });
-
             button.addActionListener(new ButtonClickListener());
             buttonPanel.add(button);
         }
