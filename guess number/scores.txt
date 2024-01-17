@@ -1,13 +1,10 @@
-Attempts left: 2
 Attempts left: 8, Correct Number: 45
 Attempts left: 2, Correct Number: 62
 Attempts left: 4, Correct Number: 100
 Attempts left: 6, Correct Number: 29
-Attempts left: 6, Correct Number: 49
 Attempts left: 4, Correct Number: 70
 Attempts left: 1, Correct Number: 59
 Attempts left: 0, Correct Number: 93
-
 Attempts left: 8, Correct Number: 80
 Attempts left: 5, Correct Number: 91
 Attempts left: 7, Correct Number: 65
