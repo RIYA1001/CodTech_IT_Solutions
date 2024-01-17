@@ -22,26 +22,14 @@ public class NumberGuessingGame extends JFrame {
 
         initializeGame();
 
-        JPanel panel = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                Graphics2D g2d = (Graphics2D) g;
-                int w = getWidth();
-                int h = getHeight();
-                Color color1 = new Color(238, 156, 167);
-                Color color2 = new Color(255, 221, 225);
-                GradientPaint gp = new GradientPaint(0, 0, color1, 0, h, color2);
-                g2d.setPaint(gp);
-                g2d.fillRect(0, 0, w, h);
-            }
-        };
-
+        JPanel panel = new JPanel();
         panel.setLayout(null);
-
+        panel.setBackground(new Color(0, 32, 63));
+      
         JLabel guessLabel = new JLabel("Enter your guess:");
         guessLabel.setBounds(100, 30, 270, 50);
         guessLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        guessLabel.setForeground(new Color(173, 239, 209));
 
         guessField = new JTextField();
         guessField.setBounds(350, 30, 70, 45);
@@ -61,6 +49,7 @@ public class NumberGuessingGame extends JFrame {
         resultLabel = new JLabel();
         resultLabel.setBounds(50, 200, 500, 50);
         resultLabel.setFont(new Font("Arial", Font.BOLD, 15));
+        resultLabel.setForeground(new Color(173, 239, 209));
 
         panel.add(guessLabel);
         panel.add(guessField);
@@ -80,21 +69,21 @@ public class NumberGuessingGame extends JFrame {
 
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
-        button.setBackground(new Color(152, 251, 152));
-        button.setForeground(Color.BLACK);
+        button.setBackground(new Color(255,231, 122));
+        button.setForeground(new Color(44, 95, 45));
         button.setFont(new Font("Arial", Font.BOLD, 25));
 
         button.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                button.setBackground(Color.BLACK);
-                button.setForeground(new Color(152, 251, 152));
+                button.setForeground(new Color(255,231, 122));
+                button.setBackground(new Color(44, 95, 45));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                button.setBackground(new Color(152, 251, 152));
-                button.setForeground(Color.BLACK);
+                button.setBackground(new Color(255,231, 122));
+                button.setForeground(new Color(44, 95, 45));
             }
         });
 
