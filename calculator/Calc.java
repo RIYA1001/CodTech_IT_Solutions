@@ -1,6 +1,4 @@
 import javax.swing.*;
-import javax.swing.border.Border;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -47,7 +45,6 @@ public class Calc extends JFrame {
             button.addActionListener(new ButtonClickListener());
             buttonPanel.add(button);
         }
-
         add(buttonPanel, BorderLayout.CENTER);
     }
 
@@ -157,14 +154,14 @@ public class Calc extends JFrame {
                         case "tan":
                             x = Math.tan(Math.toRadians(x));
                             break;
-                        case "^":
-                            x = Math.pow(x, parseFactor());
-                            break;
                         default:
                             throw new RuntimeException("Unknown function: " + func);
                     }
                 } else {
                     throw new RuntimeException("Unexpected: " + (char) ch);
+                }
+                while (eat('^')) {
+                    x = Math.pow(x, parseFactor());
                 }
                 return x;
             }
